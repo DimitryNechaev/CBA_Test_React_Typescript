@@ -22,8 +22,14 @@ class App extends React.Component<any, IAppState> {
 
   public callApi = async () => {
     const settings = Settings;
-    const dogsReader = new DogsReader(settings.dogsApiUrl);
+    const dogsReader = new DogsReader(settings.dogsApiUrl, settings.supportedExtensions);
     const dogUrls = await dogsReader.getUrls(8);
+
+    dogUrls.forEach((val: string, idx: number) => { 
+      if (!val) {
+        dogUrls[idx] = settings.badUrlImage;
+      }
+    });
 
     return dogUrls;
   };
