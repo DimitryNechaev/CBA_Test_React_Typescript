@@ -1,10 +1,11 @@
 import * as React from 'react';
-import './App.css';
+import { Button, Col, Row } from 'reactstrap';
 
 import DogsReader from './DogsReader';
 import Settings from "./settings";
 
-import logo from './logo.svg';
+import { DogRow } from "./DogRow";
+
 
 interface IAppState {
   dogUrls: string[];
@@ -44,22 +45,16 @@ class App extends React.Component<any, IAppState> {
 
   public render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          {this.state.dogUrls.map(url => {
-              return (
-                <span key={url}>
-                  {url}
-                </span>
-              )
-            })}
-        </p>
-      </div>
-    );
+        <div>
+          <DogRow key={0} urls={this.state.dogUrls} rowNumber={0} dogsInRow={4} />
+          <DogRow key={1} urls={this.state.dogUrls} rowNumber={1} dogsInRow={4} />
+          <Row>
+            <Col>
+              <Button className="btn btn-info btn-lg btn-block" onClick={this.refresh}>Refresh</Button>
+            </Col>
+          </Row>
+        </div>
+      ) 
   }
 }
 
