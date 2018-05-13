@@ -1,0 +1,5 @@
+install:
+- npm install -g yarn
+- yarn install
+script:
+- yarn test
