@@ -1,9 +1,41 @@
 import * as React from 'react';
 import './App.css';
 
+import DogsReader from './DogsReader';
+import Settings from "./settings";
+
 import logo from './logo.svg';
 
-class App extends React.Component {
+interface IAppState {
+  dogUrls: string[];
+}
+
+
+class App extends React.Component<any, IAppState> {
+  public state: IAppState = {
+    dogUrls: []
+  }
+
+  public componentDidMount() {
+     this.refresh();
+  }
+
+  public callApi = async () => {
+    const settings = Settings;
+    const dogsReader = new DogsReader(settings.dogsApiUrl);
+    const dogUrls = await dogsReader.getUrls(8);
+
+    return dogUrls;
+  };
+
+  public refresh = async() => {
+    this.setState({ dogUrls: [] });
+    this.callApi()
+      .then(data => this.setState({ dogUrls: data }))
+      // tslint:disable-next-line:no-console
+      .catch(err => console.log(err));
+  }
+
   public render() {
     return (
       <div className="App">
@@ -12,7 +44,13 @@ class App extends React.Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
+          {this.state.dogUrls.map(url => {
+              return (
+                <span key={url}>
+                  {url}
+                </span>
+              )
+            })}
         </p>
       </div>
     );
