@@ -1,8 +1,8 @@
-# This app is written on typescript and displays random dogs using API https://random.dog/woof.json
+# This app is written on React/typescript to random dogs using API https://random.dog/woof.json
 
 # Start up
 
-- yarn
+- yarn install
 - yarn start
 
 # Usage
